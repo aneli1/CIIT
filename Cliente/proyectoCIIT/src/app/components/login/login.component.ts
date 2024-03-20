@@ -1,20 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-declare var $:any;
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Usuario } from 'src/app/models/Usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
+  usuario = new Usuario() ;
+  constructor(private usuarioService : UsuarioService , private router: Router){
 
-  constructor() { }
-
-  ngOnInit(): void {
-    $(document).ready(function(){
-      //$('.carousel').carousel();
-      $('.modal').modal();
-      $('.carousel.carousel-slider').carousel();
-    });
   }
 
+  logueo()
+  {
+    this.usuarioService.existe(this.usuario.correo,this.usuario.contrasena).subscribe((resusuario: any) =>
+    {
+      if(resusuario.id_Rol != -1)
+      {
+        localStorage.setItem('correo', resusuario.correo);
+        localStorage.setItem('id_Rol', resusuario.id_Rol);
+        this.router.navigateByUrl('/home/empresa');
+      }else{
+        console.log("Error, usuario o contrasena no valida");
+      }
+    },
+    err => console.error(err)
+    );
+  }
 }
