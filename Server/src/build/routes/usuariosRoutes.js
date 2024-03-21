@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const usuariosController_1 = require("../controllers/usuariosController");
-const auth_1 = require("../middleware/auth");
 class UsuariosRoutes {
     constructor() {
         this.router = (0, express_1.Router)();
@@ -10,7 +9,7 @@ class UsuariosRoutes {
     }
     config() {
         //this.router.get('/mostrarTodosUsuarios/',(req,res) => res.send('probando usuarios'));
-        this.router.get('/mostrarTodosUsuarios/', auth_1.validarToken, usuariosController_1.usuariosController.mostrar_todos_usuarios);
+        this.router.get('/mostrarTodosUsuarios/', usuariosController_1.usuariosController.mostrar_todos_usuarios);
         this.router.get('/obtenerUsuario/:id', usuariosController_1.usuariosController.listOne);
         this.router.post('/crearUsuario/', usuariosController_1.usuariosController.createUsuario);
         this.router.put('/actualizarUsuario/:id', usuariosController_1.usuariosController.actualizarUsuario);

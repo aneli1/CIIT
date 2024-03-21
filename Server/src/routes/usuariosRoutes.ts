@@ -11,7 +11,7 @@ this.config();
 config() : void
 {
 //this.router.get('/mostrarTodosUsuarios/',(req,res) => res.send('probando usuarios'));
-this.router.get('/mostrarTodosUsuarios/',validarToken,usuariosController.mostrar_todos_usuarios);
+this.router.get('/mostrarTodosUsuarios/',usuariosController.mostrar_todos_usuarios);
 this.router.get('/obtenerUsuario/:id',usuariosController.listOne);
 this.router.post('/crearUsuario/',usuariosController.createUsuario);
 this.router.put('/actualizarUsuario/:id',usuariosController.actualizarUsuario);
