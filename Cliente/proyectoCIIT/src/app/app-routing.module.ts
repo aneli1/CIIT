@@ -4,6 +4,8 @@ import { LoginComponent } from './components/login/login.component';
 import { EmpresaComponent } from './components/empresa/empresa.component';
 import { HomeComponent } from './components/home/home.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
+import { ReestablecerContrasenaComponent } from './components/reestablecer-contrasena/reestablecer-contrasena.component';
+import { OlvideContrasenaComponent } from './components/olvide-contrasena/olvide-contrasena.component';
 
 const routes: Routes = [
   {
@@ -14,6 +16,14 @@ const routes: Routes = [
   {
     path:'login',
     component: LoginComponent
+  },
+  {
+    path: 'olvideContrasena',
+    component: OlvideContrasenaComponent
+  },
+  {
+    path: 'reestablecerContrasena',
+    component: ReestablecerContrasenaComponent
   },
   {
       path: 'home',

@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.usuariosController = void 0;
 const database_1 = __importDefault(require("../database")); //acceso a la base de datos
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 class UsuariosController {
     mostrar_todos_usuarios(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -83,6 +84,25 @@ class UsuariosController {
                 res.json({ "id_Rol": "-1" });
             //res.json(null);
             //console.log(consulta);
+        });
+    }
+    obtenerUsuarioCorreo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { correo } = req.params;
+            const resp = yield database_1.default.query(`SELECT * FROM usuarios WHERE correo = '${correo}'`);
+            if (resp.length > 0)
+                res.json(resp);
+            else
+                res.json({ "id_Rol": "-1" });
+        });
+    }
+    actualizarContrasena(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const salt = yield bcryptjs_1.default.genSalt(10);
+            req.body.Contrasena = yield bcryptjs_1.default.hash(req.body.Contrasena, salt);
+            const resp = yield database_1.default.query("UPDATE usuarios set ? WHERE id = ?", [req.body, id]);
+            res.json(resp);
         });
     }
 }

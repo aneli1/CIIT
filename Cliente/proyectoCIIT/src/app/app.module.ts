@@ -11,6 +11,8 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { FooterComponent } from './components/footer/footer.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { CommonModule } from '@angular/common';
+import { ReestablecerContrasenaComponent } from './components/reestablecer-contrasena/reestablecer-contrasena.component';
+import { OlvideContrasenaComponent } from './components/olvide-contrasena/olvide-contrasena.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +21,9 @@ import { CommonModule } from '@angular/common';
     HomeComponent,
     NavigationComponent,
     FooterComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    ReestablecerContrasenaComponent,
+    OlvideContrasenaComponent
   ],
   imports: [
     BrowserModule,

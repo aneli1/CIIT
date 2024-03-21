@@ -1,5 +1,6 @@
 import {Request,Response} from 'express';
 import pool from '../database'; //acceso a la base de datos
+import bcrypt from 'bcryptjs';
 class UsuariosController
 {
 public async mostrar_todos_usuarios(req: Request, res: Response ): Promise<void>{
@@ -62,6 +63,27 @@ public async ValidarUsuario(req: Request, res: Response): Promise<void> {
     //res.json(null);
     //console.log(consulta);
 }    
+
+public async obtenerUsuarioCorreo(req: Request, res: Response): Promise<void> {
+    const { correo } = req.params;
+    const resp = await pool.query(`SELECT * FROM usuarios WHERE correo = '${correo}'`);
+    if(resp.length>0)
+        res.json(resp);
+    else
+        res.json({"id_Rol":"-1"});
+}
+
+
+public async actualizarContrasena(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+
+    const salt = await bcrypt.genSalt(10);
+    req.body.Contrasena = await bcrypt.hash(req.body.Contrasena, salt);
+
+    const resp = await pool.query("UPDATE usuarios set ? WHERE id = ?", [req.body, id]);
+    res.json(resp);
+}
+
 }
 
 export const usuariosController = new UsuariosController();
