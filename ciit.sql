@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 16-03-2024 a las 17:47:35
--- Versión del servidor: 8.0.31
--- Versión de PHP: 8.0.26
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 21-03-2024 a las 03:53:37
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,16 +27,14 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `empresa`
 --
 
-DROP TABLE IF EXISTS `empresa`;
-CREATE TABLE IF NOT EXISTS `empresa` (
-  `id_empresa` bigint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `empresa` (
+  `id_empresa` bigint(20) NOT NULL,
   `nombre_empresa` text NOT NULL,
   `direccion` text NOT NULL,
   `rfc` text NOT NULL,
   `telefono` text NOT NULL,
-  `responsable` text NOT NULL,
-  PRIMARY KEY (`id_empresa`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `responsable` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `empresa`
@@ -53,16 +51,14 @@ INSERT INTO `empresa` (`id_empresa`, `nombre_empresa`, `direccion`, `rfc`, `tele
 -- Estructura de tabla para la tabla `ofertalaboral`
 --
 
-DROP TABLE IF EXISTS `ofertalaboral`;
-CREATE TABLE IF NOT EXISTS `ofertalaboral` (
-  `idOferta` bigint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `ofertalaboral` (
+  `idOferta` bigint(20) NOT NULL,
   `salario` float NOT NULL,
   `puesto` text NOT NULL,
-  `id_empresa` bigint NOT NULL,
+  `id_empresa` bigint(20) NOT NULL,
   `descripcion` text NOT NULL,
-  `horario` text NOT NULL,
-  PRIMARY KEY (`idOferta`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `horario` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `ofertalaboral`
@@ -80,11 +76,10 @@ INSERT INTO `ofertalaboral` (`idOferta`, `salario`, `puesto`, `id_empresa`, `des
 -- Estructura de tabla para la tabla `oferta_empresa`
 --
 
-DROP TABLE IF EXISTS `oferta_empresa`;
-CREATE TABLE IF NOT EXISTS `oferta_empresa` (
-  `idEmpresa` bigint NOT NULL,
-  `idOferta` bigint NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `oferta_empresa` (
+  `idEmpresa` bigint(20) NOT NULL,
+  `idOferta` bigint(20) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `oferta_empresa`
@@ -102,12 +97,10 @@ INSERT INTO `oferta_empresa` (`idEmpresa`, `idOferta`) VALUES
 -- Estructura de tabla para la tabla `roles`
 --
 
-DROP TABLE IF EXISTS `roles`;
-CREATE TABLE IF NOT EXISTS `roles` (
-  `id_rol` bigint NOT NULL AUTO_INCREMENT,
-  `nombre_rol` text NOT NULL,
-  PRIMARY KEY (`id_rol`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `roles` (
+  `id_rol` bigint(20) NOT NULL,
+  `nombre_rol` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `roles`
@@ -122,24 +115,79 @@ INSERT INTO `roles` (`id_rol`, `nombre_rol`) VALUES
 -- Estructura de tabla para la tabla `usuarios`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
-CREATE TABLE IF NOT EXISTS `usuarios` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `usuarios` (
+  `id` bigint(20) NOT NULL,
   `nombre` text NOT NULL,
   `correo` text NOT NULL,
-  `id_Rol` bigint NOT NULL,
-  `contrasena` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id_Rol` bigint(20) NOT NULL,
+  `contrasena` varchar(300) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `correo`, `id_Rol`, `contrasena`) VALUES
-(1, 'Juan Perez', 'juan@gmail.com', 1, '123*'),
-(2, 'Alejandro Rosas', 'Ale@gmail.com', 3, '456#'),
-(4, 'Angel Cruz', 'Angel@gmail.com', 4, '789*');
+(1, 'Juan Perez', 'juan@gmail.com', 1, '$2b$10$BlxJLZCbhDOlw5y9Bflm8.8GtMuXSl1yOyJ/lNUtcSSwdpDQ1eGWa'),
+(2, 'Alejandro Rosas', 'Ale@gmail.com', 3, '$2b$10$2Iyvv44GZN/UaMCPQz5B5OMXFLkgegrGH8XesCfjus6A6HH6z.MZm'),
+(4, 'Angel Cruz', 'Angel@gmail.com', 4, '$2b$10$FyruYKi5bnAkYa/dmGsouugDFCviSPeAxKCqPabHdkZSLxAvoCUqO'),
+(9, 'Temp', 'Angel@gmail.com', 0, '789*');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `empresa`
+--
+ALTER TABLE `empresa`
+  ADD PRIMARY KEY (`id_empresa`);
+
+--
+-- Indices de la tabla `ofertalaboral`
+--
+ALTER TABLE `ofertalaboral`
+  ADD PRIMARY KEY (`idOferta`);
+
+--
+-- Indices de la tabla `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id_rol`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `empresa`
+--
+ALTER TABLE `empresa`
+  MODIFY `id_empresa` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `ofertalaboral`
+--
+ALTER TABLE `ofertalaboral`
+  MODIFY `idOferta` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id_rol` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
