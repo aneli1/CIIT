@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { EmpresaComponent } from './components/empresa/empresa.component';
 import { HomeComponent } from './components/home/home.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
+import { OfertaLaboralComponent } from './components/oferta-laboral/oferta-laboral.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,11 @@ const routes: Routes = [
         path: 'empresa',
         component: EmpresaComponent
       },
+      {
+        path: 'ofertaLaboral',
+        component: OfertaLaboralComponent
+      },
+      
       ]
   }
 ];
