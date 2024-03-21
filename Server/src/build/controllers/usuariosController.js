@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.usuariosController = void 0;
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const database_1 = __importDefault(require("../database")); //acceso a la base de datos
 class UsuariosController {
     mostrar_todos_usuarios(req, res) {
@@ -95,5 +96,20 @@ class UsuariosController {
                 res.json({ "id_Rol": "-1" });
         });
     }
+    actualizarContrasena(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { token } = req.params;
+            //Destokenizamos
+            const decoded = decodeJWT(token);
+            console.log(decoded);
+            const salt = yield bcryptjs_1.default.genSalt(10);
+            req.body.Contrasena = yield bcryptjs_1.default.hash(req.body.Contrasena, salt);
+            const resp = yield database_1.default.query("UPDATE usuarios set ? WHERE correo = ?", [req.body, decoded]);
+            res.json(resp);
+        });
+    }
+}
+function decodeJWT(token) {
+    return (Buffer.from(token.split('.')[1], 'base64').toString());
 }
 exports.usuariosController = new UsuariosController();

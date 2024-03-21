@@ -1,4 +1,5 @@
 import {Request,Response} from 'express';
+import bcrypt from 'bcryptjs';
 import pool from '../database'; //acceso a la base de datos
 class UsuariosController
 {
@@ -71,6 +72,26 @@ public async obtenerUsuarioCorreo(req: Request, res: Response): Promise<void> {
     else
         res.json({"id_Rol":"-1"});
 }
+
+
+public async actualizarContrasena(req: Request, res: Response): Promise<void> {
+    const {token} = req.params;
+    //Destokenizamos
+    const decoded = decodeJWT(token);
+    console.log(decoded);
+
+    const salt = await bcrypt.genSalt(10);
+    req.body.Contrasena = await bcrypt.hash(req.body.Contrasena, salt)
+    const resp = await pool.query("UPDATE usuarios set ? WHERE correo = ?", [req.body, decoded]);
+    res.json(resp);
+}
+
+
+}
+
+
+function decodeJWT(token:any) {
+    return (Buffer.from(token.split('.')[1], 'base64').toString());
 }
 
 export const usuariosController = new UsuariosController();

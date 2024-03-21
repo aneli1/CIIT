@@ -22,7 +22,7 @@ const routes: Routes = [
     component: OlvideContrasenaComponent
   },
   {
-    path: 'reestablecerContrasena',
+    path: 'reestablecerContrasena/:token',
     component: ReestablecerContrasenaComponent
   },
   {
