@@ -5,6 +5,7 @@ import { EmpresaComponent } from './components/empresa/empresa.component';
 import { HomeComponent } from './components/home/home.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { OfertaLaboralComponent } from './components/oferta-laboral/oferta-laboral.component';
+import { PrincipalComponent } from './components/principal/principal.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path:'login',
     component: LoginComponent
+  },
+  {
+    path:'principal',
+    component: PrincipalComponent
   },
   {
       path: 'home',
