@@ -15,6 +15,8 @@ export class UsuarioComponent implements OnInit{
   usuario: Usuario = new Usuario();
   usuarioNuevo: Usuario = new Usuario();
   roles : Rol [] = []
+  pageSize = 5;
+  p = 1;
 
   
   constructor(private usuarioService: UsuarioService, private rolesService : RolesService) {

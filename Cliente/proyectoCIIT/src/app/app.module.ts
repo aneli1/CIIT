@@ -11,6 +11,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { FooterComponent } from './components/footer/footer.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { CommonModule } from '@angular/common';
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,8 @@ import { CommonModule } from '@angular/common';
     HttpClientModule,
     AppRoutingModule,
     FormsModule, 
-    CommonModule
+    CommonModule,
+    NgxPaginationModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
