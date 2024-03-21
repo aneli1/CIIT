@@ -1,8 +1,8 @@
 export default{
     database: {
         host:'localhost',
-        user: 'root',
-        password:'',
+        user: 'samuel',
+        password:'123',
         database:'ciit'
     }
 }

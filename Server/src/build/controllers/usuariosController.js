@@ -85,5 +85,15 @@ class UsuariosController {
             //console.log(consulta);
         });
     }
+    obtenerUsuarioCorreo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { correo } = req.params;
+            const resp = yield database_1.default.query(`SELECT * FROM usuarios WHERE correo = '${correo}'`);
+            if (resp.length > 0)
+                res.json(resp);
+            else
+                res.json({ "id_Rol": "-1" });
+        });
+    }
 }
 exports.usuariosController = new UsuariosController();

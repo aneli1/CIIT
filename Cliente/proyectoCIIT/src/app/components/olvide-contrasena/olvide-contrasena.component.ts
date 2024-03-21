@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
+import { CorreoService } from 'src/app/services/correo.service';
 
 @Component({
   selector: 'app-olvide-contrasena',
@@ -10,7 +11,7 @@ export class OlvideContrasenaComponent implements OnInit {
 
   correo : string = "";
 
-  constructor() {
+  constructor(private correosService: CorreoService) {
     this.correo = "";
    }
 
@@ -19,15 +20,15 @@ export class OlvideContrasenaComponent implements OnInit {
 
   enviarCorreo(){
     console.log(this.correo);
-
-    Swal.fire({
-      title: 'Correo enviado',
-      text: 'Se ha enviado un correo a su dirección de correo electrónico',
-      icon: 'success',
-      confirmButtonText: 'Aceptar'
-    })
-
-
+        Swal.fire({
+          title: 'Correo enviado',
+          text: 'Se ha enviado un correo a su dirección de correo electrónico',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        }) 
+    this.correosService.enviarCorreoRecuperarContrasena({Email: this.correo}).subscribe((res: any) => {
+      console.log(res);
+    });
   }
 
 }

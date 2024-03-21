@@ -207,6 +207,45 @@
                     
             }
         },
+        "/api/usuarios/obtenerUsuarioCorreo/{correo}":{
+            "get": {
+                "tags": ["Usuarios"],
+                "summary": "Obtencion de un usuario",
+                "description": "<p>Servicio que devuelve la información detallada de un usuario</p>",
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "examples": {      
+                            "application/json": [
+                                
+                                {
+                                    "id": 4,
+                                    "nombre": "Angel Cruz",
+                                    "correo": "example@gmail.com",
+                                    "id_Rol": 4,
+                                    "contrasena": "789*"
+                                }
+                            ]
+                        },
+                        "schema":{
+                            "$ref": "#/definitions/Usuario"
+                        }
+                    },
+                    "403":{
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters":[              
+                    {                          
+                        "name" : "correo",
+                        "in" : "path",
+                        "required" : true,
+                        "description" : "correo del usuario",
+                        "type" : "string", 
+                        "default" : "example@gmail.com"
+            } ]
+            }
+        },
         "/api/empresas/MostrarTodasEmpresas/":{
             "get": {
                 "tags": [
