@@ -19,6 +19,7 @@ this.router.delete('/eliminarUsuario/:id',usuariosController.eliminarUsuario);
 this.router.get('/listarUsuariosRol/:id',usuariosController.listarUsuariosRol);
 this.router.post('/ValidarUsuario/',usuariosController.ValidarUsuario);
 this.router.get('/obtenerUsuarioCorreo/:correo',usuariosController.obtenerUsuarioCorreo);
+this.router.put('/actualizarContrasena/:id',usuariosController.actualizarContrasena);
 }
 }
 const usuariosRoutes= new UsuariosRoutes();
