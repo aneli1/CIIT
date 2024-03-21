@@ -6,7 +6,8 @@ import { HomeComponent } from './components/home/home.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { ReestablecerContrasenaComponent } from './components/reestablecer-contrasena/reestablecer-contrasena.component';
 import { OlvideContrasenaComponent } from './components/olvide-contrasena/olvide-contrasena.component';
-
+import { PrincipalComponent } from './components/principal/principal.component';
+import { OfertaLaboralComponent } from './components/oferta-laboral/oferta-laboral.component';
 const routes: Routes = [
   {
     path:"",
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path:'login',
     component: LoginComponent
+  },
+  {
+    path:'principal',
+    component: PrincipalComponent
   },
   {
     path: 'olvideContrasena',
@@ -36,6 +41,10 @@ const routes: Routes = [
       {
         path: 'empresa',
         component: EmpresaComponent
+      },
+      {
+        path: 'ofertaLaboral',
+        component: OfertaLaboralComponent
       },
       ]
   }
