@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.usuariosController = void 0;
 const database_1 = __importDefault(require("../database")); //acceso a la base de datos
+const bcrypt_1 = __importDefault(require("bcrypt"));
 class UsuariosController {
     mostrar_todos_usuarios(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -37,9 +38,17 @@ class UsuariosController {
     createUsuario(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             //console.log(req.body)
-            const resp = yield database_1.default.query("INSERT INTO usuarios set ?", [req.body]);
-            res.json(resp);
-            //res.json(null);
+            const salt = yield bcrypt_1.default.genSalt(10);
+            req.body.contrasena = yield bcrypt_1.default.hash(req.body.contrasena, salt);
+            //console.log(req.body.contrasena);
+            //console.log(await bcrypt.hash(req.body.password, salt))
+            try {
+                const resp = yield database_1.default.query("INSERT INTO usuarios set ?", [req.body]);
+                res.json(1);
+            }
+            catch (error) {
+                console.log(error);
+            }
         });
     }
     actualizarUsuario(req, res) {
@@ -73,16 +82,39 @@ class UsuariosController {
     }
     ValidarUsuario(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //console.log(req.body)
             const parametros = req.body;
-            var consulta = `SELECT id_Rol, correo FROM usuarios WHERE correo = '${parametros.correo}' AND contrasena = '${parametros.contrasena}'`;
-            const resp = yield database_1.default.query(consulta);
-            if (resp.length > 0)
-                res.json(resp);
-            else
-                res.json({ "id_Rol": "-1" });
-            //res.json(null);
+            const consulta = "SELECT * FROM usuarios WHERE correo = ?";
+            //console.log(parametros);
             //console.log(consulta);
+            try {
+                const respuesta = yield database_1.default.query(consulta, [parametros.correo]);
+                if (respuesta.length > 0) {
+                    const usuario = respuesta[0];
+                    bcrypt_1.default.compare(parametros.contrasena, usuario.contrasena, (err, resEncriptar) => {
+                        if (resEncriptar) {
+                            const prueba = {
+                                id_: usuario.id,
+                                nombre: usuario.nombre,
+                                correo: usuario.correo,
+                                id_Rol: usuario.id_Rol
+                            };
+                            res.json(prueba);
+                        }
+                        else {
+                            console.log("Contraseña incorrecta");
+                            res.json({ id_Rol: "-1" });
+                        }
+                    });
+                }
+                else {
+                    console.log("Usuario no encontrado");
+                    res.json({ id_Rol: "-1" });
+                }
+            }
+            catch (error) {
+                console.error("Error al validar usuario:", error);
+                res.status(500).json({ mensaje: 'Error en el servidor' });
+            }
         });
     }
 }
